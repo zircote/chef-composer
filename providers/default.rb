@@ -7,12 +7,7 @@ action :install do
     owner new_resource.owner
     mode 0755
   end
-  if new_resource.alias
-    template "/etc/profile.d/composer.sh" do
-      not_if "test -f /etc/profile.d/composer.sh"
-      source "composer.sh.erb"
-    end
-  end
+  execute "ln -nsf #{new_resource.install_path}/composer.phar #{new_resource.install_path}/composer"
 end
 
 action :uninstall do
@@ -29,6 +24,6 @@ end
 action :update do
   execute "self-update-composer" do
     only_if "test -f #{new_resource.install_path}/composer.phar"
-    command "/usr/bin/env php #{new_resource.install_path}/composer.phar -n --no-ansi -q self-update"
+    command "#{new_resource.install_path}/composer.phar -n --no-ansi -q self-update"
   end
 end
