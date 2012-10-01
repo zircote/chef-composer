@@ -27,15 +27,15 @@ Usage
 ### Actions:
 
  - `:install`
- -  `:uninstall`
- -  `:update`
+ - `:uninstall`
+ - `:update`
  
 ### Example:
 
 ```ruby
 composer "/usr/local/bin" do
   owner "root" # optional
-  action [:install, :upgrade]
+  action [:install, :update]
 end
 
 composer "/usr/local/bin" do
