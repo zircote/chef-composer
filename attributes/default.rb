@@ -23,3 +23,6 @@ default[:composer][:install_path] = "/usr/local/bin"
 default[:composer][:owner] = "root"
 ## Composer Project Options
 default[:composer][:dev] = false
+## Symfony Settings
+default[:composer][:sfpath] = "/var/www/Symfony/"
+default[:composer][:user] = "vagrant"

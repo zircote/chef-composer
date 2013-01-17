@@ -30,4 +30,5 @@ version          "0.1.0"
 end
 
 recipe "composer", "PHP Composer Installation and project interactions"
+recipe "composer::symfony", "Install symfony"
 

@@ -18,14 +18,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 action :install do
-  remote_file "get-composer" do
-    not_if "test -f #{new_resource.install_path}/composer.phar"
-    path "#{new_resource.install_path}/composer.phar"
-    source "https://getcomposer.org/composer.phar"
-    owner new_resource.owner
-    mode 0755
+  if not "test -f #{new_resource.install_path}/composer" 
+    remote_file "get-composer" do
+      not_if "test -f #{new_resource.install_path}/composer.phar"
+      path "#{new_resource.install_path}/composer.phar"
+      source "https://getcomposer.org/composer.phar"
+      owner new_resource.owner
+      mode 0755
+    end
+    execute "ln-composer" do
+      not_if "test -f #{new_resource.install_path}/composer"
+      command "ln -nsf #{new_resource.install_path}/composer.phar #{new_resource.install_path}/composer"
+    end
+  else
+    execute "self-update-composer-insteadinstall" do
+      only_if "test -f #{new_resource.install_path}/composer.phar"
+      command "#{new_resource.install_path}/composer.phar -n --no-ansi -q self-update"
+    end
   end
-  execute "ln -nsf #{new_resource.install_path}/composer.phar #{new_resource.install_path}/composer"
 end
 
 action :uninstall do
