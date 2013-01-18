@@ -2,6 +2,7 @@
 # Cookbook Name:: composer
 #
 # Copyright 2012, Robert Allen
+# Add On Geraud Puechaldou
 #
 # @license    http://www.apache.org/licenses/LICENSE-2.0
 #             Copyright [2012] [Robert Allen]
@@ -18,12 +19,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-## Composer Options
-default[:composer][:install_path] = "/usr/local/bin"
-default[:composer][:owner] = "root"
-## Composer Project Options
-default[:composer][:dev] = false
-## Symfony Settings
-default[:composer][:sfpath] = "/var/www"
-default[:composer][:sffolder] = "Symfony"
-default[:composer][:sfversion] = "Symfony"
+actions :install, :update
+
+default_action :install
+attribute :project_packname, :kind_of => String, :name_attribute => true
+attribute :project_packpath, :kind_of => String
+attribute :project_packfolder, :kind_of => String
+attribute :project_packversion, :kind_of => String
+attribute :dev, :equal_to => [true, false], :default => false
+attribute :install_path, :kind_of => String

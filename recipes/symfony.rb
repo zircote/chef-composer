@@ -1,5 +1,6 @@
 #
 # Cookbook Name:: composer
+# Recipe:: default
 #
 # Copyright 2012, Robert Allen
 #
@@ -17,13 +18,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+#
 
-## Composer Options
-default[:composer][:install_path] = "/usr/local/bin"
-default[:composer][:owner] = "root"
-## Composer Project Options
-default[:composer][:dev] = false
-## Symfony Settings
-default[:composer][:sfpath] = "/var/www"
-default[:composer][:sffolder] = "Symfony"
-default[:composer][:sfversion] = "Symfony"
+composer_project_packages "symfony/framework-standard-edition" do
+	project_packpath node['composer']['sfpath']
+	project_packfolder node['composer']['sffolder']
+	project_packversion node['composer']['sfversion']
+	dev false
+  	action [:install]
+end
