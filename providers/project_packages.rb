@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 action :install do
-  if ::File.exists?("#{new_resource.install_path}/composer.phar")
+  if ::File.exists?("#{node['composer']['install_path']}/composer.phar")
     execute "install-composer-project-packages" do
       only_if "which composer >>/dev/null"
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
@@ -27,7 +27,7 @@ action :install do
       command "composer create-project -n --no-ansi -q #{dev} #{new_resource.project_packname} #{new_resource.project_packpath}/#{new_resource.project_packfolder}/ #{new_resource.project_packversion}"
     end
   else
-    Chef::Log.Info("Composer is not installed")
+    Chef::Log.info("Composer is not installed - " + "#{node['composer']['install_path']}/composer.phar")
   end
 end
 action :update do
@@ -39,7 +39,7 @@ action :update do
       command "composer update -n --no-ansi -q #{dev}"
     end
   else
-    Chef::Log.Info("Composer is not installed")
+    Chef::Log.info("Composer is not installed")
   end
 end
 
