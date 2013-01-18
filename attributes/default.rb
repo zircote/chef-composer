@@ -26,4 +26,4 @@ default[:composer][:dev] = false
 ## Symfony Settings
 default[:composer][:sfpath] = "/var/www"
 default[:composer][:sffolder] = "Symfony"
-default[:composer][:sfversion] = "Symfony"
+default[:composer][:sfversion] = ""

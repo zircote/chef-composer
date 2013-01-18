@@ -25,6 +25,6 @@ default_action :install
 attribute :project_packname, :kind_of => String, :name_attribute => true
 attribute :project_packpath, :kind_of => String
 attribute :project_packfolder, :kind_of => String
-attribute :project_packversion, :kind_of => String
+attribute :project_packversion, :kind_of => String, :default => ''
 attribute :dev, :equal_to => [true, false], :default => false
 attribute :install_path, :kind_of => String
