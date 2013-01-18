@@ -22,6 +22,7 @@ action :install do
     execute "install-composer-project-packages" do
       only_if "which composer >>/dev/null"
       user "vagrant" 
+      group "vagrant"
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
       cwd new_resource.project_packpath
       dev = new_resource.dev ? "--dev" : ''
@@ -30,6 +31,7 @@ action :install do
     execute "mv from cache to folder" do
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
       user "vagrant"
+      group "vagrant"
       command "mv #{Chef::Config[:file_cache_path]}/#{new_resource.project_packfolder}/ #{new_resource.project_packpath}/#{new_resource.project_packfolder}/"
     end
   else
