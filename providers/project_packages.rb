@@ -25,14 +25,13 @@ action :install do
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
       cwd new_resource.project_packpath
       dev = new_resource.dev ? "--dev" : ''
-      command "composer create-project #{dev} #{new_resource.project_packname} #{new_resource.project_packpath}/#{new_resource.project_packfolder}/ #{new_resource.project_packversion}"
+      command "composer create-project #{dev} #{new_resource.project_packname} #{Chef::Config[:file_cache_path]}/#{new_resource.project_packfolder}/ #{new_resource.project_packversion}"
     end
-=begin
     execute "mv from cache to folder" do
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
+      user "vagrant"
       command "mv #{Chef::Config[:file_cache_path]}/#{new_resource.project_packfolder}/ #{new_resource.project_packpath}/#{new_resource.project_packfolder}/"
     end
-=end
   else
     Chef::Log.info("Composer is not installed - " + "#{node['composer']['install_path']}/composer.phar")
   end
