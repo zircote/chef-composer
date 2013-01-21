@@ -32,7 +32,8 @@
   "groupings": {
   },
   "recipes": {
-    "composer": "PHP Composer Installation and project interactions"
+    "composer": "PHP Composer Installation and project interactions",
+    "composer::symfony": "Install symfony"
   },
   "version": "0.1.0"
 }
