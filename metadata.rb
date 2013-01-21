@@ -2,6 +2,7 @@
 # Cookbook Name:: composer
 #
 # Copyright 2012, Robert Allen
+# Add On Geraud Puechaldou
 #
 # @license    http://www.apache.org/licenses/LICENSE-2.0
 #             Copyright [2012] [Robert Allen]

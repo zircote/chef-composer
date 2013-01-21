@@ -2,6 +2,7 @@
 # Cookbook Name:: composer
 #
 # Copyright 2012, Robert Allen
+# AddOn Geraud Puechaldou
 #
 # @license    http://www.apache.org/licenses/LICENSE-2.0
 #             Copyright [2012] [Robert Allen]
@@ -17,6 +18,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 action :install do
   if ::File.exists?("#{node['composer']['install_path']}/composer.phar")
     execute "install-composer-project-packages" do
@@ -26,12 +28,14 @@ action :install do
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
       cwd new_resource.project_packpath
       dev = new_resource.dev ? "--dev" : ''
+      # create project in cache folder and move it after because install could take a lot of time if directly in a shared folder
       command "composer create-project #{dev} #{new_resource.project_packname} #{Chef::Config[:file_cache_path]}/#{new_resource.project_packfolder}/ #{new_resource.project_packversion}"
     end
     execute "mv from cache to folder" do
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
       user "vagrant"
       group "vagrant"
+      # move from cache to the folder could be slow if folder is a shared
       command "mv #{Chef::Config[:file_cache_path]}/#{new_resource.project_packfolder}/ #{new_resource.project_packpath}/#{new_resource.project_packfolder}/"
     end
   else
@@ -44,7 +48,8 @@ action :update do
       only_if "which composer >>/dev/null"
       cwd new_resource.project_packpath/new_resource.project_packfolder
       dev = new_resource.dev ? "--dev" : ''
-      command "composer update -n --no-ansi -q #{dev}"
+      # update directly in the folder could be slow if the folder is shared
+      command "composer update #{dev}"
     end
   else
     Chef::Log.info("Composer is not installed")

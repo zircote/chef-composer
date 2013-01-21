@@ -33,6 +33,7 @@ def whichfile(cmd)
 end
 
 def find_php
+  # verify if PHP is installed if not raise an error and stop
   @php_bin = whichfile("php")
   if !@php_bin 
     raise "PHP was not found."
@@ -43,6 +44,7 @@ end
 action :install do
   find_php()
 
+  # verify if composer is not installed otherwise make an update
   if !::File.exists?("#{new_resource.install_path}/composer.phar")
     Chef::Log.info('Composer is not installed')
     remote_file "get-whickomposer" do

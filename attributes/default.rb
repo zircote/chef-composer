@@ -23,7 +23,7 @@ default[:composer][:install_path] = "/usr/local/bin"
 default[:composer][:owner] = "root"
 ## Composer Project Options
 default[:composer][:dev] = false
-## Symfony Settings
+## Symfony Recipe Settings
 default[:composer][:sfpath] = "/var/www"
 default[:composer][:sffolder] = "Symfony"
 default[:composer][:sfversion] = ""
