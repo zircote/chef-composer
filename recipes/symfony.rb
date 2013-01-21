@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: composer
+# Recipe:: default
 #
 # Copyright 2012, Robert Allen
-# Add On Geraud Puechaldou
 #
 # @license    http://www.apache.org/licenses/LICENSE-2.0
 #             Copyright [2012] [Robert Allen]
@@ -18,18 +18,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+#
 
-maintainer       "Robert Allen"
-maintainer_email "zircote@gmail.com"
-license          "Apache 2.0"
-description      "Installs/Configures php composer"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.1.0"
-
-%w{ debian ubuntu centos redhat fedora scientific amazon suse }.each do |os|
-  supports os
+composer_project_packages "symfony/framework-standard-edition" do
+	project_packpath node['composer']['sfpath']
+	project_packfolder node['composer']['sffolder']
+	project_packversion node['composer']['sfversion']
+	dev false
+  	action [:install]
 end
-
-recipe "composer", "PHP Composer Installation and project interactions"
-recipe "composer::symfony", "Install symfony"
-
