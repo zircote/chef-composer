@@ -70,7 +70,7 @@ create a custom project from a specific package like symfony (recipe as an examp
 
 ### Example:
 
-̀̀`ruby
+```ruby
 composer_project_packages "symfony/framework-standard-edition" do
 	project_packpath "/var/www"
 	project_packfolder "Symfony"
@@ -78,7 +78,7 @@ composer_project_packages "symfony/framework-standard-edition" do
 	dev false
   	action [:install]
 end
-̀̀̀
+```
 
 ## `Recipe Symfony`
 
