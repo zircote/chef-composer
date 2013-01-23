@@ -25,6 +25,8 @@ composer_project_packages "symfony/framework-standard-edition" do
 	project_packpath node['composer']['sfpath']
 	project_packfolder node['composer']['sffolder']
 	project_packversion node['composer']['sfversion']
+	project_packuser node['composer']['sfuser']
+	project_packgroup node['composer']['sfgroup']
 	dev false
   	action [:install]
 end

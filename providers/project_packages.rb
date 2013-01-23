@@ -23,8 +23,8 @@ action :install do
   if ::File.exists?("#{node['composer']['install_path']}/composer.phar")
     execute "install-composer-project-packages" do
       only_if "which composer >>/dev/null"
-      user "vagrant" 
-      group "vagrant"
+      user "#{new_resource.project_packuser}"
+      group "#{new_resource.project_packgroup}"
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
       cwd new_resource.project_packpath
       dev = new_resource.dev ? "--dev" : ''
@@ -33,8 +33,8 @@ action :install do
     end
     execute "mv from cache to folder" do
       not_if "test -f #{new_resource.project_packpath}/#{new_resource.project_packfolder}/composer.lock"
-      user "vagrant"
-      group "vagrant"
+      user "#{new_resource.project_packuser}"
+      group "#{new_resource.project_packgroup}"
       # move from cache to the folder could be slow if folder is a shared
       command "mv #{Chef::Config[:file_cache_path]}/#{new_resource.project_packfolder}/ #{new_resource.project_packpath}/#{new_resource.project_packfolder}/"
     end
@@ -46,6 +46,8 @@ action :update do
   if ::File.exists?("#{new_resource.install_path}/composer.phar")
     execute "update-composer-project-packages" do
       only_if "which composer >>/dev/null"
+      user "#{new_resource.project_packuser}"
+      group "#{new_resource.project_packgroup}"
       cwd new_resource.project_packpath/new_resource.project_packfolder
       dev = new_resource.dev ? "--dev" : ''
       # update directly in the folder could be slow if the folder is shared

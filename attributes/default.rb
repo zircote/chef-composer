@@ -27,3 +27,5 @@ default[:composer][:dev] = false
 default[:composer][:sfpath] = "/var/www"
 default[:composer][:sffolder] = "Symfony"
 default[:composer][:sfversion] = ""
+default[:composer][:sfuser] = "vagrant"
+default[:composer][:sfgroup] = "vagrant"
