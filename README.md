@@ -60,3 +60,43 @@ composer_project "/var/www/pr1" do
  action [:install, :update, :dump_autoload]
 end
 ```
+## `composer_project_package`
+
+create a custom project from a specific package like symfony (recipe as an example)
+
+## Actions:
+- `:install`
+- `:update`
+
+### Example:
+
+```ruby
+composer_project_packages "symfony/framework-standard-edition" do
+	project_packpath "/var/www"
+	project_packfolder "Symfony"
+	project_packversion "2.1.7"
+	dev false
+  	action [:install]
+end
+```
+
+## `Recipe Symfony`
+
+This recipe install symfony in default folder define or by cutomize the folowing attributes :
+
+### Attributes
+
+ - `:sfpath`: The path which Symfony will be installed
+ - `:sffolder`: The directory inside the path
+ - `:sfversion`: The Symfony version to install
+ - `:sfuser`: Owner
+ - `:sfgroup`: Owner's group
+
+
+```ruby
+default[:composer][:sfpath] = "/var/www"
+default[:composer][:sffolder] = "Symfony"
+default[:composer][:sfversion] = ""
+default[:composer][:sfuser] = "vagrant"
+default[:composer][:sfgroup] = "vagrant"
+```
