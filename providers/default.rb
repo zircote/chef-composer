@@ -22,7 +22,7 @@ def whichfile(cmd)
 
   Chef::Log.debug("Executing which #{cmd}")
 
-  shell = Chef::ShellOut.new("which " + cmd, :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' })
+  shell = Mixlib::ShellOut.new("which " + cmd, :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' })
   shell.run_command
 
   unless shell.exitstatus == 0
