@@ -22,5 +22,5 @@
 #
 
 composer "/usr/local/bin" do
-  action [:install]
+  action [:install, :update]
 end
