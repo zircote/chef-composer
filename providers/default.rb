@@ -35,7 +35,7 @@ end
 def find_php
   # verify if PHP is installed if not raise an error and stop
   @php_bin = whichfile("php")
-  if !@php_bin 
+  if !@php_bin
     raise "PHP was not found."
   end
 end
@@ -44,26 +44,16 @@ end
 action :install do
   find_php()
 
-  # verify if composer is not installed otherwise make an update
-  if !::File.exists?("#{new_resource.install_path}/composer.phar")
-    Chef::Log.info('Composer is not installed')
-    remote_file "get-whickomposer" do
-      not_if "test -f #{new_resource.install_path}/composer.phar"
-      path "#{new_resource.install_path}/composer.phar"
-      source "https://getcomposer.org/composer.phar"
-      owner new_resource.owner
-      mode 0755
-    end
-    execute "ln-composer" do
-      not_if "test -f #{new_resource.install_path}/composer"
-      command "ln -nsf #{new_resource.install_path}/composer.phar #{new_resource.install_path}/composer"
-    end
-  else
-    Chef::Log.info('Composer is already installed then update')
-    execute "self-update-composer-insteadinstall" do
-      only_if "test -f #{new_resource.install_path}/composer.phar"
-      command "#{new_resource.install_path}/composer.phar -n --no-ansi -q self-update"
-    end
+  remote_file "get-whickomposer" do
+    not_if "test -f #{new_resource.install_path}/composer.phar"
+    path "#{new_resource.install_path}/composer.phar"
+    source "https://getcomposer.org/composer.phar"
+    owner new_resource.owner
+    mode 0755
+  end
+  execute "ln-composer" do
+    not_if "test -f #{new_resource.install_path}/composer"
+    command "ln -nsf #{new_resource.install_path}/composer.phar #{new_resource.install_path}/composer"
   end
 end
 
