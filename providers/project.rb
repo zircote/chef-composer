@@ -20,7 +20,6 @@
 action :install do
   execute "install-composer-packages" do
     only_if "which composer >>/dev/null"
-    not_if "test -f #{new_resource.project_dir}/composer.lock"
     cwd new_resource.project_dir
     dev = new_resource.dev ? "--dev" : "--no-dev"
     user new_resource.run_as
