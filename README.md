@@ -57,9 +57,15 @@ composer_project "/var/www/pr1" do
  dev true # optional
  run_as "www-data" # optional
  composer_path "/usr/local/bin" #optional
+ quiet false #optional
  action [:install, :update, :dump_autoload]
 end
 ```
+
+For backwards compatibility, composer will run in quiet mode by default. However,
+this can make it very difficult to debug any problems installing packages as it 
+suppresses all error messages. To allow output, set the "quiet" attribute to false.
+
 ## `composer_project_package`
 
 create a custom project from a specific package like symfony (recipe as an example)
