@@ -23,9 +23,10 @@ action :install do
     not_if "test -f #{new_resource.project_dir}/composer.lock"
     cwd new_resource.project_dir
     dev = new_resource.dev ? "--dev" : "--no-dev"
+    quiet = new_resource.quiet ? "-q" : ""
     user new_resource.run_as
     environment({"COMPOSER_HOME" => "/home/#{new_resource.run_as}/.composer"})
-    command "composer install -n --no-ansi -q #{dev}"
+    command "composer install -n --no-ansi #{quiet} #{dev}"
   end
 end
 action :update do
@@ -33,9 +34,10 @@ action :update do
     only_if "which composer >>/dev/null"
     cwd new_resource.project_dir
     dev = new_resource.dev ? "--dev" : "--no-dev"
+    quiet = new_resource.quiet ? "-q" : ""
     user new_resource.run_as
     environment({"COMPOSER_HOME" => "/home/#{new_resource.run_as}/.composer"})
-    command "composer update -n --no-ansi -q #{dev}"
+    command "composer update -n --no-ansi #{quiet} #{dev}"
   end
 end
 
@@ -44,8 +46,9 @@ action :dump_autoload do
     only_if "which composer >>/dev/null"
     cwd new_resource.project_dir
     dev = new_resource.dev ? "--dev" : "--no-dev"
+    quiet = new_resource.quiet ? "-q" : ""
     user new_resource.run_as
     environment({"COMPOSER_HOME" => "/home/#{new_resource.run_as}/.composer"})
-    command "composer update -n --no-ansi -q #{dev}"
+    command "composer update -n --no-ansi #{quiet} #{dev}"
   end
 end
